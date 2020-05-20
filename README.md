@@ -1,5 +1,7 @@
 # JSON Pattern Match
 
+![npm](https://img.shields.io/npm/v/json-pattern-match)
+
 ```
 npm install json-pattern-match --save-dev
 ```
