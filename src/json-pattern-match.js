@@ -37,7 +37,9 @@ const _typeof = ( obj ) => {
 
 
 const matchPattern = ( json, pattern ) => {
-  let errors = [];
+  let pass = [];
+  let miss = [];
+  let pending = [];
 
   const match = ( json, pattern, path = '$' ) => {
     const target = jp.query( json, path )[0];
@@ -46,8 +48,9 @@ const matchPattern = ( json, pattern ) => {
     switch ( _type ) {
       case 'array':
         if ( _typeof( target ) !== 'array' || target.length !== pattern.length ) {
-          errors.push({
+          miss.push({
             path: path,
+            type: 'array',
             expect: pattern,
             actual: target,
           });
@@ -59,8 +62,16 @@ const matchPattern = ( json, pattern ) => {
         break;
       case 'function':
         if ( ! pattern.call( null, target )  ) {
-          errors.push( {
+          miss.push( {
             path: path,
+            type: 'function',
+            expect: pattern,
+            actual: target,
+          } );
+        } else {
+          pass.push( {
+            path: path,
+            type: 'function',
             expect: pattern,
             actual: target,
           } );
@@ -68,8 +79,9 @@ const matchPattern = ( json, pattern ) => {
         break;
       case 'plain-object':
         if ( _typeof( target ) !== 'plain-object' ) {
-          errors.push( {
+          miss.push( {
             path: path,
+            type: 'plain-object',
             expect: pattern,
             actual: target,
           } );
@@ -84,8 +96,9 @@ const matchPattern = ( json, pattern ) => {
               }
               match( json, pattern[key], `${path}${key2}` );
             } else {
-              errors.push( {
+              miss.push( {
                 path: `${path}.${key}`,
+                type: 'plain-object',
                 expect: pattern[key],
                 actual: target[key],
               } );
@@ -93,18 +106,48 @@ const matchPattern = ( json, pattern ) => {
           }
         }
         break;
-      case 'string':
-      case 'number':
-      case 'boolean':
-        if ( _typeof( target ) !== _type || target !== pattern ) {
-          errors.push({
+      case 'regexp':
+        if ( pattern.test( target ) ) {
+          pass.push( {
             path: path,
+            type: 'regexp',
+            expect: pattern,
+            actual: target,
+          } );
+        } else {
+          miss.push({
+            path: path,
+            type: 'regexp',
             expect: pattern,
             actual: target,
           });
         }
         break;
+      case 'string':
+      case 'number':
+      case 'boolean':
+        if ( _typeof( target ) !== _type || target !== pattern ) {
+          miss.push({
+            path: path,
+            type: _type,
+            expect: pattern,
+            actual: target,
+          });
+        } else {
+          pass.push( {
+            path: path,
+            type: _type,
+            expect: pattern,
+            actual: target,
+          } );
+        }
+        break;
       default:
+        pending.push({
+          path: path,
+          expect: pattern,
+          actual: target,
+        });
         break;
     }
 
@@ -112,9 +155,22 @@ const matchPattern = ( json, pattern ) => {
 
   match( json, pattern );
 
-  return errors;
+  return {
+    miss: miss,
+    pass: pass,
+    pending: pending,
+  }
 }
 
 
 exports._typeof = _typeof;
 exports.matchPattern  = matchPattern;
+exports.__pattern = {
+  function: _.isFunction,
+  array: _.isArray,
+  plainobject: _.isPlainObject,
+  boolean: _.isBoolean,
+  number: _.isNumber,
+  string: _.isString,
+  regexp: _.isRegExp,
+}

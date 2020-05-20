@@ -1,5 +1,5 @@
 const test = require('ava');
-const { _typeof, matchPattern } = require('../src/json-pattern-match.js');
+const { _typeof, matchPattern, __pattern } = require('../src/json-pattern-match.js');
 const _ = require( 'loadsh' );
 
 test( '#_typeof', t => {
@@ -15,75 +15,40 @@ test( '#_typeof', t => {
 } );
 
 test( '#matchPattern', t => {
-  const json = [
+  const matcher = matchPattern(
+    [
+      {
+        a: 1,
+        b: {
+          c: 'https://google.com/',
+        }
+      }
+    ],
+    [
+      {
+        a: _.isNumber,
+        b: {
+          c: /https:\/\/google.com\//,
+        }
+      }
+    ]
+  )
+
+  t.deepEqual( matcher.miss, [] );
+  t.deepEqual( matcher.pending, [] );
+  t.deepEqual( matcher.pass, [
     {
-      a: 1,
-      b: '2',
-      c: [3, 4],
-      d: {
-        aa: 11,
-        nn: false,
-      }
-    }
-  ]
-  const pattern = [
+      actual: 1,
+      expect: __pattern.number,
+      path: '$[0].a',
+      type: 'function',
+    },
     {
-      a: _.isNumber,
-      b: _.isString,
-      c: _.isArray,
-      d: {
-        aa: _.isNumber,
-        nn: _.isBoolean,
-      }
+      actual: 'https://google.com/',
+      expect: /https:\/\/google.com\//,
+      path: '$[0].b.c',
+      type: 'regexp',
     }
-  ]
-
-  t.deepEqual( matchPattern( json, pattern ), [] )
-
-  t.deepEqual(
-    matchPattern(
-      {
-        'a:i': 1,
-      },
-      {
-        'a:i': _.isNumber,
-      }
-    ),
-    []
-  );
-
-  t.deepEqual(
-    matchPattern(
-      {
-        'a.i': 1,
-      },
-      {
-        'a.i': _.isNumber,
-      },
-    ),
-    []
-  );
-
-  t.deepEqual(
-    matchPattern(
-      {
-        a: [
-          {
-            n: 1,
-          },
-          {
-            n: 2,
-          }
-        ]
-      },
-      {
-        a: [
-          _.isPlainObject,
-          _.isPlainObject,
-        ]
-      }
-    ),
-    [],
-  );
+  ] );
 } );
 
