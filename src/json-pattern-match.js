@@ -31,6 +31,10 @@ const _typeof = ( obj ) => {
     return 'regexp';
   }
 
+  if( _.isNull( obj ) ) {
+    return 'null';
+  }
+
   return '';
 
 }
@@ -123,6 +127,7 @@ const matchPattern = ( json, pattern ) => {
           });
         }
         break;
+      case 'null':
       case 'string':
       case 'number':
       case 'boolean':
@@ -173,4 +178,5 @@ exports.__pattern = {
   number: _.isNumber,
   string: _.isString,
   regexp: _.isRegExp,
+  null: _.isNull,
 }

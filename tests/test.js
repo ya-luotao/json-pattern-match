@@ -22,6 +22,7 @@ test( '#matchPattern', t => {
           c: 'https://google.com/',
         },
         'c-c': false,
+        d: null,
       }
     ],
     [
@@ -31,6 +32,7 @@ test( '#matchPattern', t => {
           c: /https:\/\/google.com\//,
         },
         'c-c': __pattern.boolean,
+        d: null,
       }
     ]
   )
@@ -55,6 +57,12 @@ test( '#matchPattern', t => {
       expect: __pattern.boolean,
       path: "$[0]['c-c']",
       type: 'function',
+    },
+    {
+      actual: null,
+      expect: null,
+      path: '$[0].d',
+      type: 'null',
     }
   ] );
 } );
