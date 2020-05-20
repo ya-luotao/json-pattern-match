@@ -63,5 +63,27 @@ test( '#jsonMatch', t => {
     ),
     []
   );
+
+  t.deepEqual(
+    jsonMatch(
+      {
+        a: [
+          {
+            n: 1,
+          },
+          {
+            n: 2,
+          }
+        ]
+      },
+      {
+        a: [
+          _.isPlainObject,
+          _.isPlainObject,
+        ]
+      }
+    ),
+    [],
+  );
 } );
 

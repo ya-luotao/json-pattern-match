@@ -45,7 +45,7 @@ const jsonMatch = ( json, pattern ) => {
 
     switch ( _type ) {
       case 'array':
-        if ( _typeof( target ) !== 'array' || json.length !== pattern.length ) {
+        if ( _typeof( target ) !== 'array' || target.length !== pattern.length ) {
           errors.push({
             path: path,
             expect: pattern,
@@ -87,7 +87,7 @@ const jsonMatch = ( json, pattern ) => {
               errors.push( {
                 path: `${path}.${key}`,
                 expect: pattern[key],
-                actual: json[key],
+                actual: target[key],
               } );
             }
           }
