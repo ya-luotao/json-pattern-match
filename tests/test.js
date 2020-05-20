@@ -1,6 +1,5 @@
 const test = require('ava');
 const { _typeof, matchPattern, __pattern } = require('../src/json-pattern-match.js');
-const _ = require( 'loadsh' );
 
 test( '#_typeof', t => {
   t.plan( 8 );
@@ -21,15 +20,17 @@ test( '#matchPattern', t => {
         a: 1,
         b: {
           c: 'https://google.com/',
-        }
+        },
+        'c-c': false,
       }
     ],
     [
       {
-        a: _.isNumber,
+        a: __pattern.number,
         b: {
           c: /https:\/\/google.com\//,
-        }
+        },
+        'c-c': __pattern.boolean,
       }
     ]
   )
@@ -48,6 +49,12 @@ test( '#matchPattern', t => {
       expect: /https:\/\/google.com\//,
       path: '$[0].b.c',
       type: 'regexp',
+    },
+    {
+      actual: false,
+      expect: __pattern.boolean,
+      path: "$[0]['c-c']",
+      type: 'function',
     }
   ] );
 } );

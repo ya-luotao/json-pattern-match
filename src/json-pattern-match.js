@@ -89,7 +89,7 @@ const matchPattern = ( json, pattern ) => {
           for ( const key in pattern ) {
             if ( target[key] !== undefined ) {
               let key2;
-              if ( key.indexOf( ':' ) > -1 || key.indexOf( '.' ) > -1 ) {
+              if ( key.indexOf( ':' ) > -1 || key.indexOf( '.' ) > -1 || key.indexOf( '-' ) > -1 ) {
                 key2 = `['${key}']`;
               } else {
                 key2 = `.${key}`;
