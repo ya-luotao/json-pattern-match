@@ -1,0 +1,20 @@
+{
+  "name": "json-pattern-match",
+  "version": "1.0.2",
+  "description": "json pattern match",
+  "main": "src/json-pattern-match.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "json",
+    "pattern"
+  ],
+  "author": "luotao",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^3.8.2",
+    "jsonpath": "^1.0.2",
+    "loadsh": "0.0.4"
+  }
+}
