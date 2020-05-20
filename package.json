@@ -10,6 +10,7 @@
     "json",
     "pattern"
   ],
+  "repository": "https://github.com/luotaorr/json-pattern-match",
   "author": "luotao",
   "license": "MIT",
   "devDependencies": {
