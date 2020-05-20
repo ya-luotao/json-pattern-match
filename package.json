@@ -1,6 +1,6 @@
 {
   "name": "json-pattern-match",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "json pattern match",
   "main": "src/json-pattern-match.js",
   "scripts": {
