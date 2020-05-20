@@ -1,4 +1,4 @@
-# Json Pattern Match
+# JSON Pattern Match
 
 ```
 npm install json-pattern-match --save-dev
@@ -8,7 +8,7 @@ npm install json-pattern-match --save-dev
 const { matchPattern, __pattern } = require('json-pattern-match'); 
 
 const data = {
-  title: 'Json Pattern Match',
+  title: 'JSON Pattern Match',
   url: 'http://localhost/',
   author: 'luotaorr',
   published: true,
@@ -24,4 +24,8 @@ const pattern = {
   size: __pattern.number,
   files: __pattern.array,
 }
+
+const matcher = matchPattern( data, pattern );
+
+console.log( matcher.miss );
 ```
