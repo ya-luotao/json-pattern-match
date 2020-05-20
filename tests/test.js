@@ -1,5 +1,5 @@
 const test = require('ava');
-const { _typeof, jsonMatch } = require('../src/json-pattern-match.js');
+const { _typeof, matchPattern } = require('../src/json-pattern-match.js');
 const _ = require( 'loadsh' );
 
 test( '#_typeof', t => {
@@ -14,7 +14,7 @@ test( '#_typeof', t => {
   t.is( _typeof( /http/ ), 'regexp' );
 } );
 
-test( '#jsonMatch', t => {
+test( '#matchPattern', t => {
   const json = [
     {
       a: 1,
@@ -38,10 +38,10 @@ test( '#jsonMatch', t => {
     }
   ]
 
-  t.deepEqual( jsonMatch( json, pattern ), [] )
+  t.deepEqual( matchPattern( json, pattern ), [] )
 
   t.deepEqual(
-    jsonMatch(
+    matchPattern(
       {
         'a:i': 1,
       },
@@ -53,7 +53,7 @@ test( '#jsonMatch', t => {
   );
 
   t.deepEqual(
-    jsonMatch(
+    matchPattern(
       {
         'a.i': 1,
       },
@@ -65,7 +65,7 @@ test( '#jsonMatch', t => {
   );
 
   t.deepEqual(
-    jsonMatch(
+    matchPattern(
       {
         a: [
           {

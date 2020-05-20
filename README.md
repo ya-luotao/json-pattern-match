@@ -1,5 +1,9 @@
 # Json Pattern Match
 
 ```
-npm i json-pattern-match
+npm install json-pattern-match --save-dev
+```
+
+```javascript
+const { matchPattern } = require('json-pattern-match'); 
 ```

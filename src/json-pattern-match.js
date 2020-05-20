@@ -36,7 +36,7 @@ const _typeof = ( obj ) => {
 }
 
 
-const jsonMatch = ( json, pattern ) => {
+const matchPattern = ( json, pattern ) => {
   let errors = [];
 
   const match = ( json, pattern, path = '$' ) => {
@@ -117,4 +117,4 @@ const jsonMatch = ( json, pattern ) => {
 
 
 exports._typeof = _typeof;
-exports.jsonMatch  = jsonMatch;
+exports.matchPattern  = matchPattern;
